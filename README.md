@@ -1,14 +1,13 @@
 <div align="center">
-  <img src="./frontend/public/favicon.ico" alt="Finora Logo" width="80"/>
-  <h1>Finora AI</h1>
+  <h1>Finora</h1>
   <p><strong> Agentic Investment Research & Portfolio Intelligence Platform</strong></p>
   
   <p>
-    <img src="https://img.shields.io/badge/Frontend-Next.js_15-black?style=for-the-badge&logo=next.js" alt="Next.js" />
-    <img src="https://img.shields.io/badge/Backend-FastAPI-009688?style=for-the-badge&logo=fastapi" alt="FastAPI" />
-    <img src="https://img.shields.io/badge/Python-3.12-3776AB?style=for-the-badge&logo=python" alt="Python" />
-    <img src="https://img.shields.io/badge/Caching-Redis-DC382D?style=for-the-badge&logo=redis" alt="Redis" />
-    <img src="https://img.shields.io/badge/Agents-LangGraph-F4A261?style=for-the-badge&logo=langchain" alt="LangGraph" />
+    <img src="https://img.shields.io/badge/Next.js_15-black?style=for-the-badge&logo=next.js" alt="Next.js" />
+    <img src="https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=fastapi" alt="FastAPI" />
+    <img src="https://img.shields.io/badge/Python_3.12-3776AB?style=for-the-badge&logo=python" alt="Python" />
+    <img src="https://img.shields.io/badge/Redis-DC382D?style=for-the-badge&logo=redis" alt="Redis" />
+    <img src="https://img.shields.io/badge/LangGraph-F4A261?style=for-the-badge&logo=langchain" alt="LangGraph" />
   </p>
 </div>
 
@@ -78,7 +77,7 @@ Finora utilizes concurrency techniques and in-memory caching to efficiently proc
 ### Environment Setup
 1. Clone the repository:
    ```bash
-   git clone https://github.com/YOUR_USERNAME/finora.git
+   git clone https://github.com/akshatbansal13/Finora.git
    cd finora
    ```
 2. Set up environment variables on the backend:
