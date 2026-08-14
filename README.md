@@ -24,7 +24,7 @@ Finora utilizes concurrency techniques and in-memory caching to efficiently proc
 
 🤖 **Multi-Agent AI Workflow (LangGraph)**
 - Six specialized AI agents (Fundamental, Technical, Sentiment, Macro, Risk, Strategy) collaborate in a directed graph to provide holistic, bias-free analysis.
-- Generates beautiful, highly detailed markdown reports with definitive BUY/SELL/HOLD recommendations and confidence scores.
+- Generates detailed markdown reports with definitive BUY/SELL/HOLD recommendations and confidence scores.
 
 📊 **Paper Trading & Portfolio Management**
 - Create virtual portfolios and execute simulated trades using live market data.
@@ -45,6 +45,9 @@ Finora utilizes concurrency techniques and in-memory caching to efficiently proc
 ---
 
 ## 🏗️ Architecture & Technology Stack
+
+ <img width="1651" height="953" alt="system_architecture" src="https://github.com/user-attachments/assets/a3abbd9e-d0ab-4716-bd0e-69ad97557b36" />
+
 
 ### Frontend (Client)
 - **Framework:** Next.js 15 (App Router), React 19, TypeScript
