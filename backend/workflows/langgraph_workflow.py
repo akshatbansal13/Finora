@@ -49,10 +49,9 @@ def financial_node(state: WorkflowState) -> WorkflowState:
             context=state["retrieved_documents"],
             upcoming_events=events_str
         )
-        state["financial_analysis"] = res
+        return {"financial_analysis": res}
     except Exception as e:
-        state["financial_analysis"] = {"error": str(e)}
-    return state
+        return {"financial_analysis": {"error": str(e)}}
 
 import time
 
@@ -69,10 +68,9 @@ def news_node(state: WorkflowState) -> WorkflowState:
             context=state["retrieved_documents"],
             upcoming_events=events_str
         )
-        state["news_analysis"] = res
+        return {"news_analysis": res}
     except Exception as e:
-        state["news_analysis"] = {"error": str(e)}
-    return state
+        return {"news_analysis": {"error": str(e)}}
 
 def technical_node(state: WorkflowState) -> WorkflowState:
     try:
@@ -82,10 +80,9 @@ def technical_node(state: WorkflowState) -> WorkflowState:
             price_data=price_data,
             current_price=state["market_data"].get("current_price")
         )
-        state["technical_analysis"] = res
+        return {"technical_analysis": res}
     except Exception as e:
-        state["technical_analysis"] = {"error": str(e)}
-    return state
+        return {"technical_analysis": {"error": str(e)}}
 
 def risk_node(state: WorkflowState) -> WorkflowState:
     try:
@@ -95,10 +92,9 @@ def risk_node(state: WorkflowState) -> WorkflowState:
             stats_data=stats_data,
             current_price=state["market_data"].get("current_price")
         )
-        state["risk_analysis"] = res
+        return {"risk_analysis": res}
     except Exception as e:
-        state["risk_analysis"] = {"error": str(e)}
-    return state
+        return {"risk_analysis": {"error": str(e)}}
 
 def validation_node(state: WorkflowState) -> WorkflowState:
     import re
@@ -142,7 +138,7 @@ def validation_node(state: WorkflowState) -> WorkflowState:
                 for num in numbers:
                     if num > threshold_high and num > 1000: # only flag large anomalous numbers
                         # If a number is wildly out of scope of the price, it might be a valid other metric (like market cap or volume)
-                        # So we restrict this to just a lightweight warning instead of failing.
+
                         pass
                         
         state["validation_analysis"] = {"consistent": True, "flags": flags}
@@ -184,7 +180,7 @@ def report_node(state: WorkflowState) -> WorkflowState:
         state["final_report"] = {"error": repr(e), "markdown_report": f"Failed to generate report: {repr(e)}"}
     return state
 
-# Compile the Graph
+
 workflow = StateGraph(WorkflowState)
 
 workflow.add_node("FinancialAgent", financial_node)
@@ -195,12 +191,19 @@ workflow.add_node("ValidationAgent", validation_node)
 workflow.add_node("PortfolioAgent", portfolio_node)
 workflow.add_node("ReportAgent", report_node)
 
-# Define linear execution order
+#  parallel execution order for research agents
 workflow.add_edge(START, "FinancialAgent")
-workflow.add_edge("FinancialAgent", "NewsAgent")
-workflow.add_edge("NewsAgent", "TechnicalAgent")
-workflow.add_edge("TechnicalAgent", "RiskAgent")
+workflow.add_edge(START, "NewsAgent")
+workflow.add_edge(START, "TechnicalAgent")
+workflow.add_edge(START, "RiskAgent")
+
+# Converge all parallel agents to Validation
+workflow.add_edge("FinancialAgent", "ValidationAgent")
+workflow.add_edge("NewsAgent", "ValidationAgent")
+workflow.add_edge("TechnicalAgent", "ValidationAgent")
 workflow.add_edge("RiskAgent", "ValidationAgent")
+
+
 workflow.add_edge("ValidationAgent", "PortfolioAgent")
 workflow.add_edge("PortfolioAgent", "ReportAgent")
 workflow.add_edge("ReportAgent", END)
