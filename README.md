@@ -46,8 +46,83 @@ Finora utilizes concurrency techniques and in-memory caching to efficiently proc
 
 ## 🏗️ Architecture & Technology Stack
 
- <img width="1651" height="953" alt="system_architecture" src="https://github.com/user-attachments/assets/a3abbd9e-d0ab-4716-bd0e-69ad97557b36" />
+<img width="1651" height="953" alt="system_architecture" src="https://github.com/user-attachments/assets/a3abbd9e-d0ab-4716-bd0e-69ad97557b36" />
 
+<details>
+<summary>View Architecture as Mermaid Code</summary>
+
+```mermaid
+flowchart TD
+    %% Styling
+    classDef frontend fill:#0f172a,stroke:#3b82f6,stroke-width:2px,color:#fff
+    classDef api fill:#1e293b,stroke:#10b981,stroke-width:2px,color:#fff
+    classDef service fill:#0f172a,stroke:#10b981,stroke-width:1px,color:#fff,stroke-dasharray: 5 5
+    classDef data fill:#334155,stroke:#8b5cf6,stroke-width:2px,color:#fff
+    classDef ai fill:#312e81,stroke:#6366f1,stroke-width:2px,color:#fff
+    classDef external fill:#422006,stroke:#f59e0b,stroke-width:2px,color:#fff
+
+    %% 1. Client Tier
+    subgraph Client [1. Client Application]
+        UI[Next.js Frontend\nReact 19, Tailwind v4, Framer Motion]:::frontend
+    end
+
+    %% 2. API Gateway
+    subgraph Gateway [2. API Gateway]
+        FastAPI[FastAPI Backend\nAsync Python Routing]:::api
+    end
+
+    %% 3. Core Services
+    subgraph Services [3. Core Microservices]
+        direction LR
+        S1[Market Data Service\nFetch & Normalize]:::service
+        S2[Portfolio Service\nPaper Trading & MPT]:::service
+        S3[RAG Service\nDocument Ingestion]:::service
+    end
+
+    %% 4. Data Persistence & Caching
+    subgraph Data [4. Persistence & Caching]
+        direction LR
+        DB[("PostgreSQL / SQLite\nRelational Data")]:::data
+        Redis[("Redis\nFast API Caching")]:::data
+        Vector[("Qdrant\nDocument Embeddings")]:::data
+    end
+
+    %% 5. AI Orchestration
+    subgraph Brain [5. AI Orchestration Tier]
+        direction TB
+        LangGraph[LangGraph Supervisor\nMulti-Agent Workflow]:::ai
+        Agents[Fundamental, Technical, Sentiment,\nMacro, Risk, Strategy Agents]:::ai
+        
+        LangGraph --- Agents
+    end
+
+    %% 6. External APIs
+    subgraph Ext [6. External Services]
+        direction LR
+        LLM[Google Gemini / Groq\nLLM Inference]:::external
+        YF[Yahoo Finance\nLive Market Data]:::external
+    end
+
+    %% --- Connections ---
+    UI ==> FastAPI
+    
+    FastAPI ==> S1
+    FastAPI ==> S2
+    FastAPI ==> S3
+
+    %% Service to Data connections
+    S1 -.-> Redis
+    S2 -.-> DB
+    S3 -.-> Vector
+
+    %% Service to AI connections
+    S1 & S2 & S3 ==> LangGraph
+
+    %% Service to External connections
+    S1 -.-> YF
+    Agents -.-> LLM
+```
+</details>
 
 ### Frontend (Client)
 - **Framework:** Next.js 15, React 19, TypeScript

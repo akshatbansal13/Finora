@@ -51,7 +51,11 @@ def store_embeddings(
             )
         )
         
-    client.upsert(
-        collection_name=collection_name,
-        points=points
-    )
+    # Batch upsert to avoid Qdrant Cloud payload size limits
+    batch_size = 100
+    for i in range(0, len(points), batch_size):
+        batch = points[i:i + batch_size]
+        client.upsert(
+            collection_name=collection_name,
+            points=batch
+        )
