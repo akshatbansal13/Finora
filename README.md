@@ -50,7 +50,7 @@ Finora utilizes concurrency techniques and in-memory caching to efficiently proc
 
 
 ### Frontend (Client)
-- **Framework:** Next.js 15 (App Router), React 19, TypeScript
+- **Framework:** Next.js 15, React 19, TypeScript
 - **Styling:** Tailwind CSS v4, Framer Motion (Glassmorphism UI)
 - **Components:** Recharts (Data Viz), Lucide React (Icons)
 - **Architecture:** Fully strict typed, responsive, Server-Side Rendered (SSR) capable.
@@ -58,12 +58,12 @@ Finora utilizes concurrency techniques and in-memory caching to efficiently proc
 ### Backend (Server)
 - **Framework:** FastAPI, Python 3.12
 - **Database:** SQLAlchemy (ORM), SQLite (Local) / PostgreSQL (Production)
-- **Caching:** Redis (In-memory KV store)
+- **Caching:** Redis
 - **Concurrency:** ThreadPoolExecutor for concurrent web scraping and financial fetching.
 
 ### AI & Data Layer
 - **Orchestration:** LangChain & LangGraph
-- **LLMs:** Groq (Llama-3 for ultra-fast Market Summaries), Google Gemini (Agentic workflows)
+- **LLMs:** Groq (Llama-3 for fast Market Summaries), Google Gemini (Agentic workflows)
 - **Vector DB:** Qdrant (for RAG embeddings)
 - **Data Providers:** yfinance
 
